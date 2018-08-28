@@ -25,13 +25,17 @@
             type: 'POST',
             success: function(response) {
             var out=$.parseJSON(response);
-
-                if(out.camp.length!=0){
-                var ind=out.id;
+            var ind=out.id;
                 var keys = [];
                 for(var k in ind)
                     keys.push(k);
+
+                if(keys.length!=0){
+
                  var pa=document.getElementById('out');
+                 var rangeObj = new Range();
+                rangeObj.selectNodeContents(pa);
+                 rangeObj.deleteContents();
 
                 for(var id in keys){
 
@@ -44,7 +48,7 @@
 
                     div.appendChild(document.createTextNode('Name:'+out.name[id]));div.appendChild(document.createElement('br'));
                     div.appendChild(document.createTextNode(' Address:'+out.address[id]));div.appendChild(document.createElement('br'));
-                    div.appendChild(document.createTextNode(' Camp:'+out.camp[id]+'\n'));div.appendChild(document.createElement('br'));
+                    div.appendChild(document.createTextNode(' Camp:'+out.camp[id]+'\n'));
 
                     pa.appendChild(div);
 
@@ -52,6 +56,18 @@
 
 
                 }
+                else{
+                console.log('no result');
+                var pa=document.getElementById('out');
+                var rangeObj = new Range();
+                rangeObj.selectNodeContents(pa);
+                 rangeObj.deleteContents();
+                var div=document.createElement("div");
+                div.appendChild(document.createTextNode('No results'));
+                 pa.appendChild(div);
+
+
+                    }
                 $('#load').hide();
             },
             error: function(error) {
