@@ -15,13 +15,15 @@ def first():
 def req1():
     inp =  request.form['inp'];
     if(len(inp)>0):
-        out= json.dumps({'status':'OK','camp':search([inp.strip()])});
-
+        res=search(inp.strip())
+        # out= json.dumps({'status':'OK','name':res[0],'address':res[1],'camp':res[2]});
+        out=res.to_json()
+        print(out)
 
         return  out
     else:
         print("no inp")
-    return json.dumps({'status':'OK','camp':''});
+    return json.dumps({'status':'OK','name':'','address':'','camp':''});
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),

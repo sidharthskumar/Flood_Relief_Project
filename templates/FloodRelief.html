@@ -13,39 +13,54 @@
  $('#load').hide();
  });
  </script>
- <script>
+  <script>
      $(function() {
     $('#sub').on('click',function(e) {
         $('body').trigger('click');
         e.preventDefault();
-
         $('#load').show();
-
-
         $.ajax({
             url: '/req1',
             data: $('form').serialize(),
             type: 'POST',
-
-
             success: function(response) {
             var out=$.parseJSON(response);
-                console.log(out.camp);
-                if(out.camp.length!=0)
-                document.getElementById('out').innerHTML = 'Result:'+out.camp;
 
+                if(out.camp.length!=0){
+                var ind=out.id;
+                var keys = [];
+                for(var k in ind)
+                    keys.push(k);
+                 var pa=document.getElementById('out');
+
+                for(var id in keys){
+
+                    pa.appendChild(document.createElement('br'));
+
+                    var div=document.createElement("div");// id="+id+"class='oot'style='background:#dde0db;width:25%;height:20%;border: 2px solid #d4dbdb;border-radius: 7px;'" )
+                    div.setAttribute("id",id);
+                    div.setAttribute("class","oot");
+                    div.setAttribute("style","background:#dde0db;width:25%;height:20%;border: 2px solid #d4dbdb;border-radius: 7px;");
+
+                    div.appendChild(document.createTextNode('Name:'+out.name[id]));div.appendChild(document.createElement('br'));
+                    div.appendChild(document.createTextNode(' Address:'+out.address[id]));div.appendChild(document.createElement('br'));
+                    div.appendChild(document.createTextNode(' Camp:'+out.camp[id]+'\n'));div.appendChild(document.createElement('br'));
+
+                    pa.appendChild(div);
+
+                   }
+
+
+                }
                 $('#load').hide();
-
             },
             error: function(error) {
                 console.log(error);
                 $('#load').hide();
-
             }
         });
     });
 });
-
  </script>
 
 
@@ -72,7 +87,7 @@ cursor: pointer;
              <input id="inp" name="inp" align="center"style="width:500px ;height:30px;" class="form-control" autocomplete="off" placeholder="Type the name of the person" required autofocus>
             <button id="sub" class="button" style="background:#dde0db;border: 2px solid #d4dbdb;border-radius: 7px;width:45px;height:40px;outline:none;">find</button>
 
-<div  class='oot' id="out" align="center" style="background:#dde0db;width:25%;height:20%;border: 2px solid #d4dbdb;border-radius: 7px;"></div>
+<div   id="out" align="center" ></div>
 
 <img src=" /static/ll.gif" style=" height:6%;width:6%;" id="load">
          </form>
